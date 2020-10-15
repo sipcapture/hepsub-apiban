@@ -1,5 +1,7 @@
 FROM node:10-alpine
-ENV version 0120916
+ENV version 0120918
+
+RUN apk add --update git bash
 
 COPY . /app
 WORKDIR /app

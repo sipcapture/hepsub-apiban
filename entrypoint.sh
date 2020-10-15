@@ -1,4 +1,4 @@
-\#!/bin/bash
+#!/bin/bash
 
 HOMER_IP="${HOMER_IP:-127.0.0.1}"
 HOMER_PORT="${HOMER_PORT:-80}"
