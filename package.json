@@ -1,8 +1,8 @@
 {
   "name": "hepsub-apiban",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "HEPSUB-APIBAN integration",
-  "main": "helloworld.js",
+  "main": "apiban.js",
   "scripts": {
     "start": "node apiban.js",
     "test": "echo \"Error: no test specified\" && exit 1"

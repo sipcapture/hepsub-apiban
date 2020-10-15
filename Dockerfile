@@ -1,9 +1,7 @@
 FROM node:10-alpine
-ENV version 0120914
+ENV version 0120916
 
-RUN apk add --update git bash
-
-RUN git clone https://github.com/sipcapture/hepsub-apiban /app
+COPY . /app
 WORKDIR /app
 
 RUN npm install 
