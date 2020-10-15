@@ -28,7 +28,7 @@ app.post('/get/:id', function (req, res) {
   console.log('NEW API POST REQ', data);
   // API ban relay
   if (req.params.ip) {
-    var APIURL = "https://apiban.org/api/"+APIKEY+"/check/"+req.params.ip;
+    var APIURL = "https://apiban.org/api/"+config.apiban.key+"/check/"+req.params.ip;
     request(APIURL, function (error, response, body) {
   	console.error('error:', error); // Print the error if one occurred
   	if (error) console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
