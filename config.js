@@ -1,6 +1,6 @@
 var config = {
-  backend: 'http://HOMER_IP_HERE:HOMER_PORT_HERE/api/v3/agent/subscribe',
-  token: '021d7d1d-005f-4ad6-b339-eb7f5846d682',
+  backend: "http://HOMER_IP_HERE:HOMER_PORT_HERE/api/v3/agent/subscribe",
+  token: "021d7d1d-005f-4ad6-b339-eb7f5846d682",
   apiban: {
 	"key" : "APIBAN_KEY_HERE"
   },
