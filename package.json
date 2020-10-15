@@ -1,0 +1,18 @@
+{
+  "name": "hepsub-apiban",
+  "version": "1.0.0",
+  "description": "HEPSUB-APIBAN integration",
+  "main": "helloworld.js",
+  "scripts": {
+    "start": "node apiban.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4",
+    "find": "^0.2.9",
+    "request": "^2.88.0",
+    "uuid": "^3.3.2"
+  }
+}
