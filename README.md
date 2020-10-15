@@ -11,7 +11,7 @@ This HEPSUB client will receive on-demand request from HOMER sessions, and resol
 npm install
 ```
 ##### Configure
-Configure your HOMER 7 API, [APIBAN key(https://www.apiban.org/)] and local Endpoint address in file `config.js`
+Configure your HOMER 7 `API Token`, [APIBAN key](https://www.apiban.org/) and local Endpoint address in file `config.js`
 
 ##### Initialize
 ```
