@@ -34,7 +34,7 @@ app.post('/get/:id', function (req, res) {
   	if (error) console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
   	res.send({"source": "apiban", "data": JSON.stringify(body)})
     });
-  )
+  }
 })
 
 app.listen(port, () => console.log('API Server started',port))
