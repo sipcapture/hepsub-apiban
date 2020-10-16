@@ -4,16 +4,20 @@
 
 [HOMER](https://github.com/sipcapture/homer-app) Seven allows external agents to subscribe capabilities to provide *"on-demand"* session details from external APIs, databases, etc. to argument internally available data without requiring data duplication and allowing creative use of the core HEP platform.
 
-This HEPSUB client will receive on-demand request from HOMER sessions, and resolve IPs to [APIBAN](https://www.apiban.org/) detections interactively.
+This HEPSUB client will receive on-demand request from HOMER sessions, and resolve IPs to [APIBAN](https://www.apiban.org/) detections.
 
-![ezgif com-optimize (75)](https://user-images.githubusercontent.com/1423657/96284862-7aa93d00-0fde-11eb-8424-de123e71c1a5.gif)
+```
+[ HOMER ] <---> [ HEPSUB-APIBAN] <---> [ APIBAN API]
+```
+
+<img src="https://user-images.githubusercontent.com/1423657/96284862-7aa93d00-0fde-11eb-8424-de123e71c1a5.gif" width=600/>
 
 ##### Install
 ```
 npm install
 ```
 ##### Configure
-Configure your HOMER 7 `API Token`, [APIBAN key](https://www.apiban.org/) and local Endpoint address in file `config.js`
+Configure your HOMER `API Token`, [APIBAN key](https://www.apiban.org/) and local Endpoint address in file `config.js`
 
 ##### Initialize
 ```
