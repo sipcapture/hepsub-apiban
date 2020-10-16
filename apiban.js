@@ -9,11 +9,14 @@ try {
 
 var express = require('express');
 const app = express();
+const util = require('util')
 const request = require('request');
 var bodyParser = require("body-parser");
 app.use(bodyParser.json());
 
 var port = config.service.port;
+
+const requestPromise = util.promisify(request);
 
 // API SETTINGS
 app.all('*', function(req, res, next) {
@@ -23,18 +26,20 @@ app.all('*', function(req, res, next) {
 });
 
 // HEP Post Paths
-app.post('/get/:id', function (req, res) {
-  var data = { params: req.params, body: req.body }
-  console.log('NEW API POST REQ', data);
+app.post('/get/:id', async function (req, res) {
+  var data = req.body;
+  console.log('NEW API POST REQ', JSON.stringify(data));
   // API ban relay
-  if (req.params.ip) {
-    var APIURL = "https://apiban.org/api/"+config.apiban.key+"/check/"+req.params.ip;
-    request(APIURL, function (error, response, body) {
-  	console.error('error:', error); // Print the error if one occurred
-  	if (error) console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-  	res.send({"source": "apiban", "data": JSON.stringify(body)})
-    });
-  }
+  if (data.data.source_ip) {
+    var banresponse = {};
+    await Promise.all(data.data.source_ip.map(async (ip) => {
+        if(ip == '127.0.0.1') return;
+    	var APIURL = "https://apiban.org/api/"+config.apiban.key+"/check/"+ip;
+    	const response = await requestPromise(APIURL);
+	if (response.body) banresponse[ip] = JSON.parse(response.body);
+    }));
+    res.send(banresponse)
+  } else { res.sendStatus(500); }
 })
 
 app.listen(port, () => console.log('API Server started',port))
