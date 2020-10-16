@@ -26,6 +26,16 @@ Configure your HOMER `API Token`, [APIBAN key](https://www.apiban.org/) and loca
 npm start
 ```
 
+##### Docker
+To use our ready container, just populate the following variables and use the included `docker-compose` file:
+```
+      - PUBLIC_IP=   YOUR SERVICE IP/DOMAIN
+      - HOMER_IP=    YOUR HOMER IP
+      - HOMER_PORT=  YOUR HOMER PORT
+      - HOMER_TOKEN= YOUR HOMER AUTH TOKEN
+      - APIBAN_KEY=  YOUR APIBAN KEY
+```
+
 ---------
 
 #### Made by Humans
