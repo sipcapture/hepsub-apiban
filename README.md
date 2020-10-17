@@ -4,18 +4,36 @@
 
 [HOMER](https://github.com/sipcapture/homer-app) Seven allows external agents to subscribe capabilities to provide *"on-demand"* session details from external APIs, databases, etc. to argument internally available data without requiring data duplication and allowing creative use of the core HEP platform.
 
-This HEPSUB client will receive on-demand request from HOMER sessions, and resolve IPs to [APIBAN](https://www.apiban.org/) detections interactively.
+This HEPSUB client will receive on-demand request from HOMER sessions, and resolve IPs to [APIBAN](https://www.apiban.org/) detections.
+
+```
+[ HOMER ] <---> [ HEPSUB-APIBAN] <---> [ APIBAN API]
+```
+
+<img src="https://user-images.githubusercontent.com/1423657/96284862-7aa93d00-0fde-11eb-8424-de123e71c1a5.gif" width=600 />
+
+<img src="https://user-images.githubusercontent.com/1423657/96286483-ba712400-0fe0-11eb-928e-7acb8ff969ef.png" width=600 />
 
 ##### Install
 ```
 npm install
 ```
 ##### Configure
-Configure your HOMER 7 `API Token`, [APIBAN key](https://www.apiban.org/) and local Endpoint address in file `config.js`
+Configure your HOMER `API Token`, [APIBAN key](https://www.apiban.org/) and local Endpoint address in file `config.js`
 
 ##### Initialize
 ```
 npm start
+```
+
+##### Docker
+To use our ready container, just populate the following variables and use the included `docker-compose` file:
+```
+      - PUBLIC_IP=   YOUR SERVICE IP/DOMAIN
+      - HOMER_IP=    YOUR HOMER IP
+      - HOMER_PORT=  YOUR HOMER PORT
+      - HOMER_TOKEN= YOUR HOMER AUTH TOKEN
+      - APIBAN_KEY=  YOUR APIBAN KEY
 ```
 
 ---------
