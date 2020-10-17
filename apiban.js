@@ -7,6 +7,9 @@ try {
   var config = require('./config.js');
 } catch(e) { console.log('Missing config!',e); process.exit(1); }
 
+var LRU = require('lru');
+var cache = new LRU({ max: 1000, maxAge: 3600000 });
+
 var express = require('express');
 const app = express();
 const util = require('util')
@@ -28,15 +31,25 @@ app.all('*', function(req, res, next) {
 // HEP Post Paths
 app.post('/get/:id', async function (req, res) {
   var data = req.body;
-  console.log('NEW API POST REQ', JSON.stringify(data));
+  if (config.debug) console.log('NEW API POST REQ', JSON.stringify(data));
   // API ban relay
   if (data.data.source_ip) {
+
     var banresponse = {};
+
     await Promise.all(data.data.source_ip.map(async (ip) => {
         if(ip == '127.0.0.1') return;
-    	var APIURL = "https://apiban.org/api/"+config.apiban.key+"/check/"+ip;
-    	const response = await requestPromise(APIURL);
-	if (response.body) banresponse[ip] = JSON.parse(response.body);
+    	var cached = cache.get(ip);
+    	if (cached) {
+		if(config.debug) console.log('Returning cached result for ip:',ip);
+		banresponse[ip] = JSON.parse(cached);
+	} else {
+		if (config.debug) console.log('Returning lookup for ip:',ip);
+    		var APIURL = "https://apiban.org/api/"+config.apiban.key+"/check/"+ip;
+    		const response = await requestPromise(APIURL);
+		if (response.body) banresponse[ip] = JSON.parse(response.body);
+		cache.set(ip, response.body);
+	}
     }));
     res.send(banresponse)
   } else { res.sendStatus(500); }
