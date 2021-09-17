@@ -10,7 +10,7 @@ var config = {
 	"port": 18088,
 	"protocol": "http",
 	"path": "/get",
-	"type": "ip",
+	"type": "cdr",
 	"ttl": 300,
 	"node": "apiban.org",
 	"gid": 10
