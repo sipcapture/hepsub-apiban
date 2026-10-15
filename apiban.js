@@ -7,6 +7,8 @@ try {
   var config = require('./config.js');
 } catch(e) { console.log('Missing config!',e); process.exit(1); }
 
+const { isIP } = require('node:net');
+
 var LRU = require('lru');
 var cache = new LRU({ max: 1000, maxAge: 3600000 });
 
@@ -16,6 +18,15 @@ var bodyParser = require("body-parser");
 app.use(bodyParser.json());
 
 var port = config.service.port;
+
+function apibanCheckUrl(ip) {
+  if (typeof ip !== 'string' || ip === '127.0.0.1' || isIP(ip) === 0) {
+    return null;
+  }
+  const key = encodeURIComponent(String(config.apiban.key));
+  const address = encodeURIComponent(ip);
+  return new URL('/api/' + key + '/check/' + address, 'https://apiban.org').href;
+}
 
 // API SETTINGS
 app.all('*', function(req, res, next) {
@@ -34,14 +45,14 @@ app.post('/get/:id', async function (req, res) {
     var banresponse = {};
 
     await Promise.all(data.data.source_ip.map(async (ip) => {
-        if(ip == '127.0.0.1') return;
+    	const APIURL = apibanCheckUrl(ip);
+    	if (!APIURL) return;
     	var cached = cache.get(ip);
     	if (cached) {
 		if(config.debug) console.log('Returning cached result for ip:',ip);
 		banresponse[ip] = JSON.parse(cached);
 	} else {
 		if (config.debug) console.log('Returning lookup for ip:',ip);
-    		var APIURL = "https://apiban.org/api/"+config.apiban.key+"/check/"+ip;
     		const response = await fetch(APIURL);
     		const body = await response.text();
 		if (body) banresponse[ip] = JSON.parse(body);
